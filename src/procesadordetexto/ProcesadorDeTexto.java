@@ -1,8 +1,11 @@
 package procesadordetexto;
 
 import java.awt.BorderLayout;
-import javafx.scene.text.Font;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
+
 
 public class ProcesadorDeTexto {
 
@@ -37,8 +40,18 @@ class Lamina extends JPanel{
         estilos = new JMenu("Estilos");
         tamano = new JMenu("Tamaño");
         //----------------------------------------------------------------------
-        Configura_menu("Arial", "Fuentes");
-      
+        Configura_menu("Arial", "Fuentes","Arial",9,12);
+        Configura_menu("Courier New", "Fuentes","Courier New",9,12);
+        Configura_menu("Verdana", "Fuentes","Verdana",19,12);
+        //----------------------------------------------------------------------
+        Configura_menu("Negrita", "Estilos","",Font.BOLD,1);
+        Configura_menu("Cursiva", "Estilos","",Font.ITALIC,1);
+        //----------------------------------------------------------------------
+        Configura_menu("12", "Tamaño","",9,12);
+        Configura_menu("16", "Tamaño","",9,16);
+        Configura_menu("20", "Tamaño","",9,20);
+        Configura_menu("24", "Tamaño","",9,24);
+        
         barra.add(fuentes);
         barra.add(estilos);
         barra.add(tamano);
@@ -49,9 +62,9 @@ class Lamina extends JPanel{
         add(papel,BorderLayout.CENTER);
         
     }
-    public void Configura_menu (String rotulo, String menu){
+    public void Configura_menu (String rotulo, String menu, String tipo_letra, int tema, int tamanio){
         
-        JMenu elem_menu = new JMenu(rotulo);
+        JMenuItem elem_menu = new JMenuItem(rotulo);
         
         if(menu =="Fuentes"){
             
@@ -62,6 +75,26 @@ class Lamina extends JPanel{
         }else {
             tamano.add(elem_menu);
         }
+        elem_menu.addActionListener(new Gestiona_evento(rotulo, tipo_letra, tema, tamanio));
+    }
+    private class Gestiona_evento implements ActionListener{
+
+         String tipo_texto, menu;
+         int estilo_letra, tamanio_letra;
+         
+         public Gestiona_evento (String elemento, String texto2, int estilo2, int tam_letra){
+             menu=elemento;
+             tipo_texto=texto2;
+             estilo_letra= estilo2;
+             tamanio_letra=tam_letra;
+         }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+         papel.setFont(new Font(tipo_texto, estilo_letra, tamanio_letra));
+        }
+           
+        
     }
 
 }
+
