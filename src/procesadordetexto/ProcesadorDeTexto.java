@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import javax.swing.*;
 
 
@@ -90,7 +91,23 @@ class Lamina extends JPanel{
          }
         @Override
         public void actionPerformed(ActionEvent e) {
-         papel.setFont(new Font(tipo_texto, estilo_letra, tamanio_letra));
+            letras =papel.getFont();
+            
+            if(menu == "Arial"||menu =="Courier New"|| menu =="Verdana"){
+                estilo_letra = letras.getStyle();
+                tamanio_letra=letras.getSize();
+            }else if (menu == "Cursiva"||menu == "Negrita"){
+                if(letras.getStyle() == 1 || letras.getStyle() == 2){
+                    estilo_letra = 3;
+                }
+                tipo_texto=letras.getFontName();
+                tamanio_letra=letras.getSize();
+            }else if (menu == "12"||menu == "16"||menu == "20"||menu == "24"){
+                tipo_texto=letras.getFontName();
+                estilo_letra=letras.getStyle();
+            }
+            
+            papel.setFont(new Font(tipo_texto, estilo_letra, tamanio_letra));
         }
            
         
